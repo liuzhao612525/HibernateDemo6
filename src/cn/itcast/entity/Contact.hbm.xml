@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+    
+<hibernate-mapping>
+	<!-- 配置类和表对应 -->
+    <class name="cn.itcast.entity.Contact" table="contact">
+    	<!-- 配置实体类id和表id对应
+    	hibernate要求实体类有一个属性唯一值
+    	hibernate要求表字段作为唯一值
+    	 -->
+    	 <!-- 
+    	 	id标签
+    	 	name：实体类id属性名
+    	 	column：生成的表字段名称
+    	  -->
+        <id name="cnid" column="cnid">
+        
+        	<!-- 设置数据库表id增长策略
+        		native:生成表id值就是主键自动增长
+        	 -->
+            <generator class="native"></generator>
+        </id>
+        <property name="cnname" column="cnname"></property>
+        <property name="cngender" column="cngender"></property>
+        <property name="cnphone" column="cnphone"></property>
+        
+        <!-- 表示联系人所有客户
+        	name属性，因为在联系人实体类使用customer对象表示，写customer名称
+        	class属性，customer全路径
+        	column属性，外键名称
+         -->
+         <many-to-one name="customer" class="cn.itcast.entity.Customer" column="clid"></many-to-one>
+        
+    </class>
+</hibernate-mapping>
+
+

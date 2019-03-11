@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+    
+<hibernate-mapping>
+	<!-- 配置类和表对应 -->
+    <class name="cn.itcast.entity.Customer" table="customer">
+    	<!-- 配置实体类id和表id对应
+    	hibernate要求实体类有一个属性唯一值
+    	hibernate要求表字段作为唯一值
+    	 -->
+    	 <!-- 
+    	 	id标签
+    	 	name：实体类id属性名
+    	 	column：生成的表字段名称
+    	  -->
+        <id name="cid" column="cid">
+        
+        	<!-- 设置数据库表id增长策略
+        		native:生成表id值就是主键自动增长
+        	 -->
+            <generator class="native"></generator>
+        </id>
+        <property name="custName" column="custName"></property>
+        <property name="custLevel" column="custLevel"></property>
+        <property name="custSource" column="custSource"></property>
+        <property name="custPhone" column="custPhone"></property>
+        <property name="custMobile" column="custMobile"></property>
+        
+        <!-- 在客户映射文件中表示所以联系人
+        	使用set标签表示所以联系人
+        	set标签里的name属性
+        	属性值写在客户实体类里面表示联系人的set集合名称
+        	inverse属性默认值：false不放弃关系维护，true：放弃关系维护
+         -->
+        <set name="contacts" cascade="save-update,delete" inverse="true"> 
+        	<!-- 一对多建表，有外键
+        		hibernate机制，双向维护外键，在一和多那一方都配置外键
+        		column属性值：外键名称
+        	 -->
+        	<key column="clid"></key>
+        	<!-- 客户所有的联系人，class里面写联系人实体类全路径 -->
+        	<one-to-many class="cn.itcast.entity.Contact"/>
+        </set>
+        
+    </class>
+</hibernate-mapping>
+
